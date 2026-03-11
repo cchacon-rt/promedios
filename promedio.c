@@ -1,3 +1,5 @@
+/*esta seccion es unicamente como borrador, solo son anotaciones de secciones*/
+
 #include<stdio.h>
 #include<stdlib.h>
 

@@ -1,0 +1,77 @@
+#!/bin/sh
+
+for i
+do
+   if test -f $i
+   then
+
+      treated="false"
+
+      fichier=`basename $i .c`
+      dir=`dirname $i`
+      if test $dir = "."
+      then
+         dir=""
+      else
+         dir="$dir/"
+      fi
+      if test $dir$fichier != $i
+      then
+         treated="true"
+         echo "$dir$fichier.c"
+         indent $dir$fichier.c $i -bad -bap -bc -br -c30 -cd30 -cdb -ce -di10 -dj -fc1 -i3 -nip -l130 -lp -npro -pcs -npsl -sc -nsob -bfda
+         sync
+      fi
+
+      fichier=`basename $i .h`
+      dir=`dirname $i`
+      if test $dir = "."
+      then
+         dir=""
+      else
+         dir="$dir/"
+      fi
+      if test $dir$fichier != $i
+      then
+         treated="true"
+         echo "$dir$fichier.h"
+         indent $dir$fichier.h $i -bad -bap -bc -br -c30 -cd30 -cdb -ce -di10 -dj -fc1 -i3 -nip -l130 -lp -npro -pcs -npsl -sc -nsob -bfda
+         sync
+      fi
+
+      fichier=`basename $i .t`
+      dir=`dirname $i`
+      if test $dir = "."
+      then
+         dir=""
+      else
+         dir="$dir/"
+      fi
+      if test $dir$fichier != $i
+      then
+         treated="true"
+         echo "$dir$fichier.t"
+         cp $i $dir$fichier.T
+         indent $dir$fichier.T $i -bad -bap -bc -br -c30 -cd30 -cdb -ce -di10 -dj -fc1 -i3 -nip -l130 -lp -npro -pcs -npsl -sc -nsob -bfda
+         sync
+      fi
+
+      if test "$treated" = "false"
+      then
+         fichier=`basename $i`
+         dir=`dirname $i`
+         if test $dir = "."
+         then
+            dir=""
+         else
+            dir="$dir/"
+         fi
+
+         echo "$dir$fichier"
+         cp $i $dir$fichier.gcb
+         indent $dir$fichier.gcb $i -bad -bap -bc -br -c30 -cd30 -cdb -ce -di10 -dj -fc1 -i3 -nip -l130 -lp -npro -pcs -npsl -sc -nsob -bfda
+         sync
+      fi
+
+   fi
+done
